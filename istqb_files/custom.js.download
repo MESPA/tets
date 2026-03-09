@@ -1,0 +1,1804 @@
+$(document).ajaxError(function(event, jqxhr, settings, exception) {
+    if (jqxhr.status === 401) {
+        alert('Your session has expired. Please login.');
+        location.reload();
+    }
+});
+
+$(document).ready(function() {
+    /* Initialize Markdown */
+    $('textarea.markdown').each(function(index, element) {
+        var id = $(element).attr('id');
+        new SimpleMDE({ element: document.getElementById(id) });
+    });
+
+    /* Initialize Datepicker */
+    $('.datepicker').each(function() {
+        $(this).datetimepicker({
+            locale: ZertDB.locale,
+            format: 'L',
+            extraFormats: ['DD MMM YYYY'],
+            useCurrent: false,
+            toolbarPlacement: 'bottom',
+            showTodayButton: true,
+            showClear: true,
+            showClose: true
+
+        })
+    });
+
+    $('.datetimepicker').each(function() {
+        $(this).datetimepicker({
+            locale: ZertDB.locale,
+            format: 'L LT',
+            extraFormats: ['DD MMM YYYY hh:mm:ss'],
+            useCurrent: false,
+            toolbarPlacement: 'bottom',
+            showTodayButton: true,
+            showClear: true,
+            showClose: true,
+            sideBySide: true
+        });
+    });
+
+    $('#datagridVmod').each(function() {
+        var table = $(this);
+        var options = {
+            "bServerSide": false,
+            "aoColumnDefs": [
+                {"sType": "num", "aTargets": [0]},
+                {"bSortable": true, "aTargets": [-1]},
+                {"bSearchable": true, "aTargets": [-1]}
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridTestcenter').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "siteId"},
+                { "mData": "name"},
+                { "mData": "region"},
+                { "mData": "city"},
+                { "mData": "state"},
+                { "mData": "country"},
+                { "mData": "address1"},
+                { "mData": "address2"},
+                { "mData": "postalCode"},
+                { "mData": "phone"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridWrittenAssignment').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "es_version"},
+                { "mData": "wa_totaldeadline"},
+                { "mData": "wa_deadline"},
+                { "mData": "wa_credits"},
+                { "mData": "wa_passBarrierRelative"},
+                { "mData": "ewa_credits"},
+                { "mData": "ewa_requestDate"},
+                { "mData": "ewa_submissionDate"},
+                { "mData": "ewa_lastReminderDate"},
+                { "mData": "ewa_forwardingDate"},
+                { "mData": "ewa_confirmationDate"},
+                { "mData": "ewa_infoMailWrittenAssignmentDate"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    /* Initialize DataTables */
+    jQuery('#datagridPvueAccomodation').each(function() {
+        var table = jQuery(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aaSorting": [[ 0, "asc" ]],
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "clientCandidateId"},
+                { "mData": "examSeriesCode"},
+                { "mData": "language"},
+                { "mData": "firstName"},
+                { "mData": "lastName"},
+                { "mData": "postalCode"},
+                { "mData": "city"},
+                { "mData": "country"},
+                { "mData": "emailAddress"},
+                { "mData": "accomodationType"},
+                { "mData": "accomodationReason"},
+                { "mData": "accomodationReasonText"},
+                { "mData": "creationDate"},
+                { "mData": "info", "bSortable": false, "bSearchable": false},
+                { "mData": "status"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.denied == '1') {
+                    $(nRow).addClass('alert-danger');
+                }
+                if ( aData.validated == '1') {
+                    $(nRow).addClass('alert-success');
+                }
+            }
+        };
+        options = jQuery.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    /* Initialize DataTables */
+    jQuery('#datagridIstqbReport').each(function() {
+        var table = jQuery(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aaSorting": [[ 0, "asc" ]],
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "period"},
+                { "mData": "payload"},
+                { "mData": "creationDate"},
+                { "mData": "uploadDate"},
+                { "mData": "info", "bSortable": false, "bSearchable": false},
+                { "mData": "status"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData ) {
+                if ( aData.denied == '1') {
+                    $(nRow).addClass('alert-danger');
+                }
+                if ( aData.validated == '1') {
+                    $(nRow).addClass('alert-success');
+                }
+            }
+        };
+        options = jQuery.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    /* Initialize DataTables */
+    jQuery('#datagridProof').each(function() {
+        var table = jQuery(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aaSorting": [[ 0, "asc" ]],
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "firstName"},
+                { "mData": "lastName"},
+                { "mData": "emailAddress"},
+                { "mData": "plannedExamDate"},
+                { "mData": "plannedExamLocation"},
+                { "mData": "plannedExamScheme"},
+                { "mData": "prerequisiteCertificateNumber1"},
+                { "mData": "prerequisiteCertificateNumber2"},
+                { "mData": "file1"},
+                { "mData": "file2"},
+                { "mData": "file3"},
+                { "mData": "creationDate"},
+                { "mData": "certificateSerialNumber"},
+                { "mData": "examParticipation"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.denied == '1') {
+                    $(nRow).addClass('alert-danger');
+                }
+                if ( aData.validated == '1') {
+                    $(nRow).addClass('alert-success');
+                }
+            }
+        };
+        options = jQuery.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    jQuery('#datagridTranslation').each(function() {
+        var table = jQuery(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aaSorting": [[ 0, "asc" ]],
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "key"},
+                { "mData": "de"},
+                { "mData": "en"},
+                { "mData": "es"},
+                { "mData": "fr"},
+                { "mData": "nl"},
+                { "mData": "comment"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ]
+        };
+        options = jQuery.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridAddress').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "company"},
+                { "mData": "emailAddress"},
+                { "mData": "addressLine1"},
+                { "mData": "addressLine2"},
+                { "mData": "addressLine3"},
+                { "mData": "postOfficeBox"},
+                { "mData": "postalCode"},
+                { "mData": "city"},
+                { "mData": "country"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnInitComplete": function() {
+                registerAssignAddress();
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridExchangeRate').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "isoCode"},
+                { "mData": "exchangeRate"},
+                { "mData": "exchangeRateDate"},
+                { "mData": "modDate"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridExaminerProfile').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "bAutoWidth": false,
+            "aoColumns": [
+                { "mData": "examinerMatchCode"},
+                { "mData": "examDate"},
+                { "mData": "examScheme", "bSortable": false, "bSearchable": false},
+                { "mData": "location", "bSortable": true, "bSearchable": true},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridExamineeProfile').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "bAutoWidth": false,
+            "aaSorting": [[ 0, "desc" ]],
+            "aoColumns": [
+                { "mData": "attendedAtDate"},
+                { "mData": "examDate"},
+                { "mData": "id", "bSortable": true, "bSearchable": true},
+                { "mData": "examSet", "bSortable": true, "bSearchable": false},
+                { "mData": "location", "bSortable": true, "bSearchable": true},
+                { "mData": "email", "bSortable": false, "bSearchable": true},
+                { "mData": "lastName", "bSortable": true, "bSearchable": true},
+                { "mData": "firstName", "bSortable": true, "bSearchable": true},
+                { "mData": "matchCode", "bSortable": true, "bSearchable": true},
+                { "mData": "processstatus", "bSortable": false, "bSearchable": false},
+                { "mData": "infomaildate", "bSortable": false, "bSearchable": false},
+                { "mData": "exampassed", "bSortable": false, "bSearchable": false},
+                { "mData": "certno", "bSortable": true, "bSearchable": true},
+                { "mData": "invoicenoEpa", "bSortable": true, "bSearchable": true},
+                { "mData": "invoicenoE", "bSortable": true, "bSearchable": true},
+                { "mData": "purchaseOrder", "bSortable": true, "bSearchable": true},
+                { "mData": "diba", "bSortable": true, "bSearchable": true},
+                { "mData": "groupId", "bSortable": true, "bSearchable": true},
+                { "mData": "groupIdModDate", "bSortable": true, "bSearchable": true},
+                { "mData": "congreetResp", "bSortable": true, "bSearchable": true},
+                { "mData": "congreetModDate", "bSortable": true, "bSearchable": true},
+                { "mData": "action", "bSortable": false, "bSearchable": false, "sWidth": "30px"}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if(aData.cancelled == '1') {
+                    $(nRow).addClass('alert-danger');
+                }
+            }
+
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+    
+    $('#datagridPVueRegions').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "examDate"},
+                { "mData": "examSet", "bSortable": true, "bSearchable": false},
+                { "mData": "location", "bSortable": true, "bSearchable": true},
+                { "mData": "lastName", "bSortable": true, "bSearchable": true},
+                { "mData": "firstName", "bSortable": true, "bSearchable": true},
+                { "mData": "matchCode", "bSortable": true, "bSearchable": true},
+                //{ "mData": "certno", "bSortable": false, "bSearchable": true},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridFollowupmail').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "attendedAtDate" },
+                { "mData": "epid" },
+                { "mData": "examSet" },
+                { "mData": "location" },
+                { "mData": "email" },
+                { "mData": "lastName" },
+                { "mData": "firstName" },
+                { "mData": "certno" },
+                { "mData": "followupmailSentDate" },
+                { "mData": "action", "bSortable": false, "bSearchable": false }
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridInvoiceExtern').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "bAutoWidth": false,
+            "aoColumns": [
+                { "mData": "lastName"},
+                { "mData": "firstName"},
+                { "mData": "customerNumber"},
+                { "mData": "invoiceNumber"},
+                { "mData": "comment"},
+                { "mData": "action", "bSortable": false, "bSearchable": false, "sWidth": "30px"}
+            ]
+        }
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridTemplate').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "templateGroup"},
+                { "mData": "type"},
+                { "mData": "language"},
+                { "mData": "paper"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridStream').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aaSorting": [[ 0, "desc" ]],
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "type"},
+                { "mData": "status"},
+                { "mData": "content"},
+                { "mData": "date"}
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridVoucher').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "code"},
+                { "mData": "matchCode"},
+                { "mData": "exam"},
+                { "mData": "examset"},
+                { "mData": "examscheme"},
+                { "mData": "examlevel"},
+                { "mData": "invoiceRecipient"},
+                { "mData": "invoiceNumber"},
+                { "mData": "price"},
+                { "mData": "currency"},
+                { "mData": "region"},
+                { "mData": "replacementVoucher"},
+                { "mData": "orderNumber"},
+                { "mData": "orderDate"},
+                { "mData": "activationDate"},
+                { "mData": "expirationDate"},
+                { "mData": "licencefee"},
+                { "mData": "invoiceNumberLicencefee"},
+                { "mData": "groupId"},
+                { "mData": "creationDate"},
+                { "mData": "workflow", "bSortable": false, "bSearchable": false},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData ) {
+                if ( aData.expired == '1' && aData.used != 1) {
+                    $(nRow).addClass('alert-invalid');
+                }
+                if ( aData.misassigned == '1') {
+                    $(nRow).addClass('alert-danger');
+                }
+                if ( aData.used == '1') {
+                    $(nRow).addClass('alert-success');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridTraining').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aaSorting": [[ 4, "desc" ]],
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "matchCode"},
+                { "mData": "syllabus"},
+                { "mData": "tutor"},
+                { "mData": "startDate"},
+                { "mData": "endDate"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.invalid == '1') {
+                    $(nRow).addClass('alert-invalid');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridExamSet').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aaSorting": [[ 5, "desc" ]],
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "language"},
+                { "mData": "syllabus"},
+                { "mData": "board"},
+                { "mData": "version"},
+                { "mData": "credits"},
+                { "mData": "writtenAssignment"},
+                { "mData": "startDate", "bSortable": false, "bSearchable": false},
+                { "mData": "endDate", "bSortable": false, "bSearchable": false},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if (aData.alert == '1') {
+                    $(nRow).addClass('alert-danger');
+                } else if (aData.invalid == '1') {
+                    $(nRow).addClass('alert-invalid');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridQuestion').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "number"},
+                { "mData": "section"},
+                { "mData": "type"},
+                { "mData": "points"},
+                { "mData": "solution"},
+                { "mData": "knowledgeLevel"},
+                { "mData": "questionBoardId"},
+                { "mData": "questionBoardVer"},
+                { "mData": "learningObjects"},
+                { "mData": "questionMarkId"},
+                { "mData": "pvueQuestionId"},
+                { "mData": "testReachId"},
+                { "mData": "gasqId"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.blocked == '1') {
+                    $(nRow).addClass('alert');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridProfile').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "matchCode"},
+                { "mData": "company"},
+                { "mData": "city"},
+                { "mData": "lastName"},
+                { "mData": "firstName"},
+                { "mData": "emailAddress"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.status == 'B') {
+                    $(nRow).addClass('alert');
+                } else if(aData.status == 'D') {
+                    $(nRow).addClass('alert-invalid');
+                }
+                if ( aData.hasComment == '1') {
+                    $(nRow).addClass('alert-special-conditions');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridExam').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aaSorting": [[ 0, "desc" ]],
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "maxMinutes", "bSortable": false, "bSearchable": false},
+                { "mData": "examSet", "bSortable": false, "bSearchable": false},
+                { "mData": "company"},
+                { "mData": "city"},
+                { "mData": "country"},
+                { "mData": "examiner"},
+                { "mData": "date"},
+                { "mData": "workflow", "bSortable": false, "bSearchable": false},
+                { "mData": "countExamParticipations", "bSortable": false, "bSearchable": false},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.invalid == '1' && aData.cancelled != 1) {
+                    $(nRow).addClass('alert-invalid');
+                }
+                if ( aData.cancelled == '1') {
+                    $(nRow).addClass('alert-danger');
+                }
+                if ( aData.completed == '1') {
+                    $(nRow).addClass('alert-success');
+                }
+                if ( aData.isConditions == '1') {
+                    $(nRow).addClass('alert-special-conditions');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridOrder').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aaSorting": [[ 0, "desc" ]],
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "statusForecast"},
+                { "mData": "invnumber"},
+                { "mData": "examProducts"},
+                { "mData": "normalizedCurrency"},
+                { "mData": "normalizedPrice"},
+                { "mData": "normalizedStorno"},
+                { "mData": "expectedInvoiceDate"},
+                { "mData": "invoiceDate"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridMissingRetrieveDocs').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aaSorting": [[ 2, "desc" ]],
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "method"},
+                { "mData": "examDate"},
+                { "mData": "company"},
+                { "mData": "city"},
+                { "mData": "country"},
+                { "mData": "shippedExaminerData"},
+                { "mData": "shippedDocsDate"},
+                { "mData": "receivedDocsDate"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridPriceTrainingProviderlist').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "product"},
+                { "mData": "examMethod"},
+                { "mData": "currency"},
+                { "mData": "boardPrice"},
+                { "mData": "client"},
+                { "mData": "clientFirstResit"},
+                { "mData": "clientOtherResit"},
+                { "mData": "staff"},
+                { "mData": "staffFirstResit"},
+                { "mData": "staffOtherResit"},
+                { "mData": "surchargeTimeExtension"},
+                { "mData": "licencefee"},
+                { "mData": "secondTry"},
+                { "mData": "badgePackage"},
+                { "mData": "discountRelativeStudents"},
+                { "mData": "discountRelativeAsqfMembers"},
+                { "mData": "comment"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.notAvailable == '1') {
+                    $(nRow).addClass('alert');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridBoardCostlist').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "product"},
+                { "mData": "examMethod"},
+                { "mData": "country"},
+                { "mData": "trainingProviders", "bSearchable": false},
+                { "mData": "currency"},
+                { "mData": "scrCost"},
+                { "mData": "taxDeduction"},
+                { "mData": "licence"},
+                { "mData": "comment"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.notAvailable == '1') {
+                    $(nRow).addClass('alert');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridSyllabusAccrediblelist').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "examSetBoard"},
+                { "mData": "issuerBoard"},
+                { "mData": "accredibleGroupId"},
+                { "mData": "comment"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.notAvailable == '1') {
+                    $(nRow).addClass('alert');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridBoardFeelist').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "issuerBoard"},
+                { "mData": "product"},
+                { "mData": "examMethod"},
+                { "mData": "country"},
+                { "mData": "currency"},
+                { "mData": "type"},
+                { "mData": "client"},
+                { "mData": "student"},
+                { "mData": "clientMinimum"},
+                { "mData": "studentMinimum"},
+                { "mData": "typeRel"},
+                { "mData": "clientRelative"},
+                { "mData": "studentRelative"},
+                { "mData": "comment"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.notAvailable == '1') {
+                    $(nRow).addClass('alert');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridExamManagementProviderlist').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "minutes"},
+                { "mData": "examMethod"},
+                { "mData": "currency"},
+                { "mData": "cost"},
+                { "mData": "country"},
+                { "mData": "comment"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.notAvailable == '1') {
+                    $(nRow).addClass('alert');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridPricelist').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "examMethod"},
+                { "mData": "schemeLevel", "bSortable": false,},
+                { "mData": "product"},
+                { "mData": "country"},
+                { "mData": "currency"},
+                { "mData": "amount"},
+                { "mData": "action", "bSortable": false, "bSearchable": false}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.notAvailable == '1') {
+                    $(nRow).addClass('alert');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagridDasadevops').each(function() {
+        var table = $(this);
+        var options = {
+            "sAjaxSource": table.attr('data-source'),
+            "aoColumns": [
+                { "mData": "id"},
+                { "mData": "gender"},
+                { "mData": "firstName"},
+                { "mData": "lastName"},
+                { "mData": "emailAddress"},
+                { "mData": "phone"},
+                { "mData": "birthDate"},
+                { "mData": "addressline1"},
+                { "mData": "postalCode"},
+                { "mData": "city"},
+                { "mData": "country"},
+                { "mData": "level"},
+                { "mData": "voucher"},
+                { "mData": "language"},
+                { "mData": "timeExtension"},
+                { "mData": "registeredAt", "bSortable": true, "bSearchable": true}
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                if ( aData.notAvailable == '1') {
+                    $(nRow).addClass('alert');
+                }
+            }
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    $('#datagrid').each(function() {
+        var table = $(this);
+        var action = table.data('datagrid-action');
+        var sortableLastColumn = typeof action !== 'undefined' || action === 'true';
+        var options = {
+            "bServerSide": false,
+            "aoColumnDefs": [
+                {"sType": "num", "aTargets": [0]},
+                {"bSortable": sortableLastColumn, "aTargets": [-1]},
+                {"bSearchable": false, "aTargets": [-1]}
+            ]
+        };
+        options = $.extend(getDefaultOptions(), options);
+        createDatatable(table, options);
+    });
+
+    registerButtonNewSection();
+    registerResetFilter();
+    registerExportButton();
+    prefillPriceValues();
+
+    toggleBillingAddress($('#differingBillingAddress'), $('#fieldset-displayGroupBillingAddress'));
+
+    toggleChangePassword($('#changePassword'));
+    $('#changePassword').click(function(){
+        toggleChangePassword($(this));
+    });
+
+    toggleProof();
+
+    toggleRow();
+
+    // $('#examMethod').change(function(e){
+    //
+    //     var button = $(this);
+    //     var div = $('#examSet');
+    //     var examSetValue = div.val();
+    //     div.empty();
+    //     var url = '/examset/element/examMethod/' + $(this).val() + '/examSet/' + examSetValue;
+    //     url = url + '/format/html';
+    //     $.get(url, function(data){
+    //         if(data){
+    //             div.html(data.element);
+    //             var specialMessages = $('#special-messages');
+    //             if (data.info) {
+    //                 specialMessages.append('<br>' + data.info);
+    //                 specialMessages.removeClass('hide');
+    //             }
+    //         }
+    //     });
+    // })
+
+    $('#allDocumentsBack').click(function(){
+        var mcVal = $('#matchCode').val();
+        var adbmc = $('#allDocumentsBackMatchcode');
+        if (mcVal.length > 0 && adbmc.val().length == 0) {
+            adbmc.val(mcVal);
+        }
+    });
+
+    toggleGotoProfile($('#trainingProviderProfile'), $('#gotoTrainingProviderProfile'), true);
+    toggleGotoProfile($('#examinerProfile'), $('#gotoExaminerProfile'), true);
+
+    var gotoShipmentTrackingButton = $('#gotoShipmentTracking');
+    gotoShipmentTrackingButton.on('click', function() {
+        window.open($(this).attr('data-href'), '_blank');
+    });
+
+    /** Tooltips */
+    $('[data-toggle="tooltip"]').tooltip({
+        "placement" : "auto top"
+    });
+
+    $(document).on('mouseover', '.popups', function(e) {
+            $(this).popover('show');
+    });
+    $(document).on('mouseout', '.popups', function(e) {
+        $(this).popover('hide');
+    });
+
+    /** Customize the popups. */
+    // $('.form-group ul.alert-danger').each(function() {
+    //     var copy = $(this).clone();
+    //     var formElement = $(this).parents('.form-group').find('.custompopup').first();
+    //     formElement.attr('data-content', 'Error');
+    //     formElement.attr('data-content', copy.text());
+    //     formElement.popover('show');
+    //     formElement.bind('click focus keyup mousedown', function(){
+    //         formElement.popover('hide');
+    //     })
+    // });
+    $('.close').click(function(){
+        var formElements = $(':input').popover('hide');
+    });
+
+    var statusForecastValue = $('#statusForecast').val();
+    $('#statusForecast').change(function(e){
+        var newValue = $(this).val();
+        if (statusForecastValue == 'Ordered' && newValue == 'Pre-Ordered') {
+            $('#notifyModal').modal();
+        }
+        if (statusForecastValue != 'Ordered' && newValue == 'Ordered') {
+            $('#notifyModal2').modal();
+        }
+    });
+
+    /** Delete-Actions need a confirm. */
+    registerConfirm();
+    registerConfirmModal();
+    registerAddLearningObject();
+    registerAddExamProduct();
+    registerAddTrainingProviderPrices();
+    registerShowHistory();
+    registerAssignAddress();
+
+    toggleProductFields($('#productType'), $('#fieldset-displayGroupProducts'));
+    toggleBoardFields($('#role'), $('#fieldset-displayGroupBoards'));
+    toggleProspectFields($('#role'), $('#fieldset-displayGroupProspects'));
+    toggleExaminerFields($('#role'), $('#fieldset-elementsDgExaminer'));
+    toggleFields($('#role'), $('#fieldset-displayGroupTP'), 6);
+
+    /* MaskedInput for birthdate*/
+    $('#birthDate').each(function(){
+        var el = $(this);
+        if(el.val() == ''){
+            $.mask.definitions['d']='[0123]';
+            $.mask.definitions['m']='[01]';
+            $.mask.definitions['y']='[12]';
+            $.mask.definitions['e']='[9012]';
+            el.mask("d9/m9/ye99");
+        }
+    });
+
+    /* MaskedInput for from and todate */
+    $(".profilefilterform #fromDate").mask("99/99/9999");
+    $(".profilefilterform #toDate").mask("99/99/9999");
+    $(".quarterreportfilterform #fromDate").mask("99/99/9999");
+    $(".quarterreportfilterform #toDate").mask("99/99/9999");
+
+    var examSetElement = $('.examParticipation #examSet');
+    if (examSetElement.val() != '') {
+        $('.examParticipation #examSet').change(function(e){
+            $('#special-messages').show();
+        });
+    }
+});
+
+function registerResetFilter()
+{
+    $('#resetFilter').click(function(e) {
+        var table = $('.dataTable').DataTable();
+        table.state.clear();
+        table.search('').columns().search('').draw();
+        if (table.table().node().id === 'datagridExam') {
+            $('#form-filter input[type="text"], #form-filter textarea').val('');
+            $('#form-filter input[type="checkbox"], #form-filter input[type="radio"]').prop('checked', false);
+            $('#form-filter select').prop('selectedIndex', 0);
+        }
+        if (table.table().node().id === 'datagridExamineeProfile') {
+            $('#form-filter input[type="text"], #form-filter textarea').val('');
+            $('#form-filter input[type="checkbox"], #form-filter input[type="radio"]').prop('checked', false);
+            $('#form-filter select').prop('selectedIndex', 0);
+        }
+        table.state.save();
+    });
+}
+
+function registerButtonNewSection()
+{
+    $('#buttonNewSection').click(function(event){
+        event.preventDefault();
+    })
+}
+
+function registerButtonRemoveSection()
+{
+    $('.buttonRemoveSection').each(function(event){
+        event.preventDefault();
+    })
+}
+
+function registerExportButton()
+{
+    $('#export').click(function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+
+        // Greife auf die erste DataTable auf der Seite zu
+        var table = $('.dataTable').first().DataTable(); // Nutzt die erste Tabelle mit DataTable-Integration
+        var order = table.order(); // Hole die aktuelle Sortierung
+
+        // Baue die Sortierparameter als Query-String
+        var orderParams = order.map(function(o) {
+            return 'order[' + o[0] + ']=' + o[1];
+        }).join('&');
+
+        // Kombiniere Filterdaten und Sortierdaten
+        var queryString = $('.form-filter').serialize();
+        if (orderParams) {
+            queryString += (queryString ? '&' : '') + orderParams;
+        }
+
+        // Navigiere zur URL mit allen Parametern
+        window.location.href = url + '?' + queryString;
+    });
+    // $('#export').click(function(e) {
+    //     e.preventDefault();
+    //     var url = $(this).attr('href');
+    //     window.location.href = url + '?' + $('.form-filter').serialize();
+    // });
+}
+
+/**
+ * Default-Settings for ajax-tables.
+ * @return {Object}
+ */
+function getDefaultOptions()
+{
+    return {
+        "language": {
+            "url": '/vendor/datatables-i18n/i18n/' + ZertDB.locale.substring(0, 2) + '.json'
+        },
+        "searchDelay": 400,
+        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+        "renderer": 'bootstrap',
+        "bProcessing": true,
+        "bServerSide": true,
+        "bStateSave" : true,
+        "iDisplayLength": 25,
+        "aoColumnDefs": [
+            { "bSortable": false, "aTargets": [ -1 ] },
+            { "bSearchable": false, "aTargets": [ -1 ] }
+        ],
+        "fnInitComplete": function() {
+            registerGeneral();
+            registerConfirm();
+            registerConfirmModal();
+            registerAttended();
+            registerAlumniconfirm();
+            registerConfirmParticipation();
+        },
+        "fnDrawCallback": function() {
+            registerConfirm();
+            registerConfirmModal();
+            registerAttended();
+            registerAlumniconfirm();
+            registerConfirmParticipation();
+        },
+        "fnServerData": function ( sUrl, aoData, fnCallback, oSettings ) {
+            oSettings.jqXHR = $.ajax( {
+                "url":  sUrl,
+                "data": aoData,
+                "success": function (json) {
+                    if ( json.sError ) {
+                        oSettings.oApi._fnLog( oSettings, 0, json.sError );
+                    }
+
+                    $(oSettings.oInstance).trigger('xhr', [oSettings, json]);
+                    fnCallback( json );
+                },
+                "dataType": "json",
+                "cache": false,
+                "type": oSettings.sServerMethod,
+                "error": function (xhr, error, thrown) {
+                    if ( error == "parsererror" ) {
+                        alert("An error occured. Please contact the support.");
+                    }
+                }
+            });
+        }
+    };
+}
+
+function createDatatable(selector, options)
+{
+    var filterForm = $('.form-filter');
+    var customFilters = jQuery(':input', filterForm);
+    var filterFormParams = null;
+    jQuery.fn.dataTableExt.afnFiltering = new Array();
+    customFilters.each(function(){
+        jQuery.fn.dataTableExt.afnFiltering.push(function( oSettings, aData, iDataIndex ) {
+            if (! element.val() || element.attr('type') === 'hidden' || (element.attr('type') === 'checkbox' && element.prop('checked', true)))
+                return true;
+            for (i = 0; i < aData.length; i++)
+                if ( aData[i].indexOf(element.val()) !== -1 )
+                    return true;
+            return false;
+        });
+    });
+
+    selector.find('thead > tr > th').each(function(index) {
+        var className = $(this).attr('class');
+        if (className !== undefined) {
+            if (! options.aoColumnDefs) {
+                options.aoColumnDefs = [];
+            }
+            options.aoColumnDefs.push({ className: className, "targets": [ index ] });
+            if ($(this).hasClass('actions')) {
+                options.aoColumnDefs.push({ width: "1px", "targets": [ index ] });
+            }
+        }
+    });
+
+    var specials = {
+        "fnServerParams": function ( aoData ) {
+            if (filterFormParams != null) {
+                aoData.push(filterFormParams);
+            }
+        },
+        "fnDrawCallback": function( oSettings ) {
+            registerConfirm();
+        },
+        "fnStateSaveParams": function ( oSettings, sValue ) {
+            customFilters.each(function() {
+                var oControl = jQuery(this);
+                if (oControl.attr('name') && oControl.attr('type') !== 'hidden') {
+                    if (oControl.attr('type') !== 'checkbox') {
+                        sValue[oControl.attr('name')] = oControl.val().replace('"', '"');
+                    } else {
+                        if (oControl.is(':checked')) {
+                            sValue[oControl.attr('name')] = oControl.val().replace('"', '"');
+                        }
+                    }
+                }
+            });
+            return sValue;
+        },
+        "fnStateLoadParams": function ( oSettings, oData ) {
+            customFilters.each(function() {
+                var oControl = jQuery(this);
+                var name = oControl.attr('name');
+                jQuery.each(oData, function(key, value) {
+                    if (key === name && value) {
+                        if (oControl.attr('type') !== 'checkbox' && jQuery(':checkbox[name="' + name + '"]', filterForm).length === 0) {
+                            oControl.val(value);
+                        } else {
+                            oControl.prop('checked', true);
+                        }
+                    }
+                });
+                filterFormParams = {'name': 'filterForm', 'value': filterForm.serialize()};
+            });
+            return true;
+        },
+        stateSaveCallback: function (oSettings, oData ) {
+
+            for (var key in localStorage) {
+                if (localStorage.hasOwnProperty(key) && !key.startsWith('datagrid')) {
+                    localStorage.removeItem(key);
+                }
+            }
+            var tableName = oSettings.sTableId;
+            localStorage.setItem(tableName, JSON.stringify(oData));
+            return true;
+        },
+        stateLoadCallback: function (oSettings) {
+            var tableName = oSettings.sTableId;
+            var savedState = localStorage.getItem(tableName);
+            if (savedState) {
+                return JSON.parse(savedState);
+            }
+            return null;
+        }
+    };
+    var settings = $.extend(options, specials);
+    var oTable = selector.DataTable(settings);
+    customFilters.each(function(){
+        var element = jQuery(this);
+        var action = 'change';
+        if (element.type == 'checkbox') {
+            action = 'click';
+        } else if (element.hasClass('datepicker') || element.hasClass('datetimepicker')) {
+            action = 'dp.change';
+        } else if (element.attr('type') == 'text') {
+            element.keypress(function(e) {
+                code = (e.keyCode ? e.keyCode : e.which);
+                if (code == 13)
+                    action = 'keypress';
+            });
+        }
+        element.bind(action, function() {
+            filterFormParams = {'name': 'filterForm', 'value': filterForm.serialize()};
+            oTable.draw();
+        });
+    })
+}
+
+function registerGeneral() {
+    $('div.dataTables_wrapper [data-toggle="tooltip"]').tooltip();
+
+    /** Customize the datatable search. */
+    $('div.dataTables_wrapper div.dataTables_filter label').prepend('<span class="glyphicon glyphicon-search"></span> ');
+    $('div.dataTables_wrapper label').addClass('form-filter').css('margin-bottom', '10px').css('padding', '8px');
+
+    $('div.dataTables_wrapper table').each(function() {
+        var table = $(this).DataTable();
+
+        var searchWait = 0;
+        var searchWaitInterval;
+        $('.dataTables_filter input')
+            .unbind()
+            .bind('input', function(e) {
+                var item = $(this);
+                searchWait = 0;
+                if (! searchWaitInterval) searchWaitInterval = setInterval(function() {
+                    if(searchWait >= 3){
+                        clearInterval(searchWaitInterval);
+                        searchWaitInterval = '';
+                        var searchTerm = $(item).val();
+                        table.search(searchTerm).draw();
+                        searchWait = 0;
+                    }
+                    searchWait++;
+            }, 500);
+        });
+    });
+}
+
+function registerAttended() {
+    $('.attended').on('click', function(e) {
+        var button = $(this);
+        var url = $(this).data('id');
+        $.get(url, function(data){
+            if(data){
+                if(data.button_class) {
+                    var i = button.children('span');
+                    i.attr('class', 'glyphicon ' + data.button_class);
+                    var tr = button.parents('tr');
+                    tr.removeClass('alert');
+                    tr.addClass(data.row_class);
+                } else {
+                    var div = $('#ajaxMessage');
+                    div.empty();
+                    div.html(data.zertdbError);
+                }
+            }
+        });
+    });
+}
+
+function registerAlumniconfirm() {
+    $('.alumniconfirm').on('click', function(e) {
+        var button = $(this);
+        var url = $(this).data('id');
+        $.get(url, function(data){
+            if(data){
+                var div = $('#ajaxMessage');
+                div.empty();
+                div.html(data.zertdbError);
+            }
+        });
+    });
+}
+
+function registerConfirmParticipation() {
+
+    $(document).on('click', '.confirm-mail', function(e){
+        var button = $(this);
+        var url = $(this).data('id');
+        var modalHeader = $('#modalEdit .modal-header');
+        var isStudent = $('.is-student');
+        isStudent.addClass('hide');
+        var isConsent = $('.data-isConsent');
+        isConsent.addClass('hide');
+        var eCB = $('.data-checkbox-excel-file');
+        eCB.addClass('hide');
+        var eFrom = $('.modal-mail-from');
+        eFrom.addClass('hide');
+        if ($(this).data('checkbox-excel-file') == '1')
+            eCB.removeClass('hide');
+        if ($(this).data('is-consent') == '1')
+            isConsent.removeClass('hide');
+        var title = $(this).data('modal-title');
+        $('.alert', modalHeader).text('').hide();
+        $.get(url, function(data){
+            if(data.status === 'success') {
+                var form = document.confirmMail;
+                form.epid.value = data.payload.epid;
+                form.params.value = data.payload.params;
+                form.mailType.value = data.payload.mailType;
+                form.from.value = data.payload.from;
+                form.to.value = data.payload.to;
+                form.bcc.value = data.payload.bcc;
+                form.subject.value = data.payload.subject;
+                form.message.value = data.payload.message;
+                title = title + ' ' + '(TemplateId: ' + data.payload.template + ')';
+                if (data.payload.alreadySent) {
+                    $('.alert', modalHeader).text('').html(data.payload.alreadySent).show();
+                }
+                if (data.payload.from && data.payload.from.length)
+                    eFrom.removeClass('hide');
+                if (data.isStudent == true)
+                    isStudent.removeClass('hide');
+                $('#modalEdit').modal();
+            } else if (data.redirect == 1){
+                window.location.href = data.url;
+            } else {
+                var div = $('#ajaxMessage');
+                div.empty();
+                div.html(data.payload);
+            }
+            $('.title', modalHeader).text(title);
+        });
+    });
+
+    $(document).on('click', '.modalDialog', function(e){
+        var button = $(this);
+        var url = $(this).data('id');
+        var modalHeader = $('#modalDialog .modal-header');
+        $('.title', modalHeader).text($(this).data('modal-title'));
+        $('.alert', modalHeader).text('').hide();
+        $.get(url, function(data){
+            $('.alert', modalHeader).text(data.title);
+            if(data.status === 'success'){
+                if (data.title) {
+                    $('.title', modalHeader).text('').html(data.title).show();
+                }
+                if (data.alert) {
+                    $('.alert', modalHeader).text('').html(data.alert).show();
+                }
+                $('#modalDialog .modal-body').text('').html(data.content).show();
+                $('#modalDialog').modal();
+            } else {
+                var div = $('#ajaxMessage');
+                div.empty();
+                div.html(data.alert);
+            }
+        });
+    });
+}
+
+function registerAddLearningObject() {
+    $('.btn-add-learning-object').on('click', function(e) {
+        var url = $(this).data('id');
+        var row = $(this).parents('#form-question .row');
+        $.get(url, function(data){
+            if(data){
+                row.prev().after(data);
+            }
+        });
+    });
+}
+
+function registerAddExamProduct() {
+    $('.btn-add-examproduct').on('click', function(e) {
+        var count = $('.examProduct').length;
+        count++;
+        var url = $(this).data('id') + count;
+        var row = $(this).parents('#form-exam .row');
+        $.get(url, function(data){
+            if(data){
+                row.prev().append(data);
+            }
+        });
+    });
+}
+
+function registerAddTrainingProviderPrices() {
+    $('.btn-add-tp-product-prices').on('click', function(e) {
+        var url = $(this).data('id') + '/product/' + $('#product').val();
+        var form = $('#prices-trainingprovider');
+        $.get(url, function(data){
+            if(data){
+                if(data.status == 200) {
+                    form.append(data.html);
+                } else {
+                    $('#info').html(data.html);
+                }
+            }
+        });
+    });
+}
+
+function registerConfirm() {
+
+    $('.confirm-delete').on('click', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        $('#confirmTarget').attr('href', id);
+        $('.confirmTarget').attr('href', id);
+        registerToggleBulkMail('#confirmTarget', id);
+    });
+}
+
+function registerConfirmModal() {
+    jQuery('.confirm-modal').on('click', function(e) {
+        e.preventDefault();
+        var id = jQuery(this).data('id');
+        jQuery('#confirmModal #confirmTarget').attr('href', id);
+    });
+
+    jQuery('.modalDialog').on('click', function(e) {
+        e.preventDefault();
+        var id = jQuery(this).data('id');
+        jQuery('#modalDialog #confirmTarget').attr('href', id);
+    });
+    jQuery('#modalVoucherAssignSubmit').on('click', function(e) {
+        e.preventDefault();
+    });
+    jQuery('#confirmVoucherAssign #confirmTarget').on('click', function(e) {
+        e.preventDefault();
+        jQuery('#confirmVoucherAssign').modal('hide');
+        jQuery('#formVoucherAssign').submit();
+    });
+}
+
+function registerToggleBulkMail(selector, href)
+{
+    $('#isMailChecked').on('click', function(){
+        var add = '/mail/1';
+        if($('input[id=isMailChecked]:checked').val()){
+            $(selector).attr('href', href + add);
+        } else {
+            $(selector).attr('href', href);
+        }
+    })
+}
+
+function toggleBillingAddress(trigger, domTarget) {
+
+    _toggleBillingAddress(trigger, domTarget);
+    trigger.click(function(){
+        _toggleBillingAddress($(this), domTarget);
+    })
+}
+
+function _toggleBillingAddress(trigger, domTarget) {
+
+    if (trigger.attr('checked')) {
+        domTarget.fadeIn();
+        $('[name^="billing_"]').each(function(){
+            $(this).removeAttr('readonly');
+        })
+    } else {
+        domTarget.fadeOut();
+        $('[name^="billing_"]').each(function(){
+            $(this).popover('hide')
+            $(this).attr('readonly', 'readonly');
+        })
+    }
+}
+
+function toggleProof() {
+    $('.fadeInOut').fadeOut();
+    $('.fadeInOut2').fadeOut();
+    $('#furtherProof').click(
+        function(){
+            $('#furtherProof').fadeOut();
+            $('.fadeInOut').fadeIn();
+        })
+    $('#furtherProof2').click(
+        function(){
+            $('#furtherProof2').fadeOut();
+            $('.fadeInOut2').fadeIn();
+        })
+}
+
+function toggleChangePassword(triggerCheckbox) {
+    var domElement = $('.passwordrow');
+    if (triggerCheckbox.prop('checked')) {
+        domElement.fadeIn();
+    } else {
+        domElement.fadeOut();
+    }
+}
+
+function toggleRow() {
+    $('#region').change(
+        function(){
+            var val = $('#region').val();
+            $('#examset-prices table tr').each(function() {
+                if (val == '' || $(this).find('.region-' + val).length > 0) {
+                    $(this).fadeIn();
+                } else {
+                    $(this).fadeOut();
+                }
+            })
+        })
+}
+
+function toggleGotoProfile(triggerElement, buttonElement, isFirst)
+{
+    triggerElement.popover('destroy');
+
+    if (isFirst) {
+        triggerElement.change(function() {
+            toggleGotoProfile(triggerElement, buttonElement, false);
+        });
+
+        buttonElement.on('click', function() {
+            window.open($(this).attr('data-href'), '_blank');
+        });
+    }
+
+    var domElement = buttonElement.parents('div.form-group');
+    var hrefEdit = buttonElement.attr('data-href-edit');
+    var id = triggerElement.val();
+    if (id > 0 && hrefEdit) {
+        buttonElement.attr('data-href', hrefEdit + '/id/' + id);
+
+        if (! isFirst) {
+            buttonElement.append('<span class="glyphicon glyphicon-refresh glyphicon-spin" style="margin-left: 15px;"></span>');
+            $.ajax({
+                url: buttonElement.attr('data-href-show') + '/id/' + id
+            }).done(function(data) {
+                if (data.comment) {
+                    triggerElement.popover({
+                        html: true,
+                        title: 'Special conditions <button type="button" class="close">&times;</button>',
+                        content: data.comment,
+                        placement: 'top'
+                    }).on('shown.bs.popover', function() {
+                        var popover = $(this);
+                        $(this).parent().find('div.popover .close').on('click', function() {
+                            popover.popover('hide');
+                        });
+                    }).popover('show');
+                }
+                buttonElement.find('span').remove();
+            });
+        }
+
+        domElement.fadeIn();
+    } else {
+        domElement.fadeOut();
+    }
+}
+
+function toggleProductFields(trigger, domTarget)
+{
+    var service = 'Service';
+    function toggle(trigger, boardsValue) {
+        var fadingFields = ['previousTraining', 'examScheme', 'examLevel', 'durationExtension'];
+        if (trigger.val() == boardsValue) {
+            $.each(fadingFields, function (index, value) {
+                $('#' + value).parent().parent().fadeOut();
+            });
+        } else {
+            $.each(fadingFields, function (index, value) {
+                $('#' + value).parent().parent().fadeIn();
+            });
+        }
+    }
+    toggle(trigger, service);
+    $(trigger).change(function () {
+        toggle(trigger, service);
+    })
+}
+
+function toggleBoardFields(trigger, domTarget)
+{
+    var boardsValue = 4;
+    function toggle(trigger, boardsValue) {
+        (trigger.val() == boardsValue) ? domTarget.fadeIn() : domTarget.fadeOut();
+    }
+    toggle(trigger, boardsValue);
+    $(trigger).change(function () {
+        toggle(trigger, boardsValue);
+    })
+}
+
+function toggleProspectFields(trigger, domTarget)
+{
+    var prospectValue = 12; // ID der Gruppe in der Tabelle role
+    function toggle(trigger, prospectValue) {
+        (trigger.val() == prospectValue) ? domTarget.fadeIn() : domTarget.fadeOut();
+    }
+    toggle(trigger, prospectValue);
+    $(trigger).change(function () {
+        toggle(trigger, prospectValue);
+    })
+}
+
+function toggleExaminerFields(trigger, domTarget)
+{
+    var value = 5;
+    function toggle(trigger, boardsValue) {
+        (trigger.val() == boardsValue) ? domTarget.fadeIn() : domTarget.fadeOut();
+    }
+    toggle(trigger, value);
+    $(trigger).change(function () {
+        toggle(trigger, value);
+    })
+}
+
+function toggleFields(trigger, domTarget, value)
+{
+    function toggle(trigger, boardsValue) {
+        (trigger.val() == boardsValue) ? domTarget.fadeIn() : domTarget.fadeOut();
+    }
+    toggle(trigger, value);
+    $(trigger).change(function () {
+        toggle(trigger, value);
+    })
+}
+
+function registerShowHistory()
+{
+    jQuery('#btnShowHistory').on('click', function(){
+        var progressBar = jQuery('.modal-body #tempprogressbar');
+        progressBar.fadeIn();
+        jQuery('.modal-body .content').html('');
+        var url = jQuery(this).data('id');
+        $.get(url, function(data){
+            var out = 'An error is occured.';
+            if(data){
+                out = data;
+            }
+            progressBar.fadeOut();
+            jQuery('.modal-body .content').html(data);
+        });
+    })
+}
+
+function registerShowProfileAddresses()
+{
+    var item = $('#form-examParticipation #fieldset-displayGroupAddress');
+    var url = item.attr('data-source');
+    url = url + '/format/html';
+    $.get(url, function(data){
+        var out = 'An error is occured.';
+        if(data){
+            out = data;
+        }
+        $('legend', item).after(out);
+        $('.assignAddress').on('click', function(){
+            alert('showprofile');
+            var btn = $(this);
+            var tr = btn.parents('tr');
+            $('#addressLine1').val($('.addressLine1', tr).text());
+            $('#addressLine2').val($('.addressLine2', tr).text());
+            $('#addressLine3').val($('.addressLine3', tr).text());
+            $('#postOfficeBox').val($('.postOfficeBox', tr).text());
+            $('#postalCode').val($('.postalCode', tr).text());
+            $('#city').val($('.city', tr).text());
+            $('#country option').filter(function(){
+                return $(this).text() == $('.country', tr).text();
+            }).attr('selected', true);
+        })
+    });
+}
+
+function registerAssignAddress()
+{
+    $(document).on('click', '.assignAddress', function(){
+        var btn = $(this);
+        var prefix = btn.data('prefix');
+        var tr = btn.parents('tr');
+        var address = {
+            company: $('td:eq(0)', tr).text(),
+            emailAddress: $('td:eq(1)', tr).text(),
+            addressLine1: $('td:eq(2)', tr).text(),
+            addressLine2: $('td:eq(3)', tr).text(),
+            addressLine3: $('td:eq(4)', tr).text(),
+            postOfficeBox: $('td:eq(5)', tr).text(),
+            postalCode: $('td:eq(6)', tr).text(),
+            city: $('td:eq(7)', tr).text(),
+            country: $('td:eq(8)', tr).text()
+        };
+        putAddressValues(address, prefix);
+    })
+}
+
+function putAddressValues(address, prefix)
+{
+    if (address.emailAddress == '-') {
+        address.emailAddress = '';
+    }
+    $('#' + prefix + 'company').val(address.company);
+    $('#' + prefix + 'emailAddress').val(address.emailAddress);
+    $('#' + prefix + 'addressLine1').val(address.addressLine1);
+    $('#' + prefix + 'addressLine2').val(address.addressLine2);
+    $('#' + prefix + 'addressLine3').val(address.addressLine3);
+    $('#' + prefix + 'postOfficeBox').val(address.postOfficeBox);
+    $('#' + prefix + 'postalCode').val(address.postalCode);
+    $('#' + prefix + 'city').val(address.city);
+    $('#' + prefix + 'country option').filter(function(){
+        return $(this).text() == address.country;
+    }).attr('selected', true);
+}
+
+function prefillPriceValues() {
+
+    $('#prefillPriceServices').on('click', function(e) {
+
+        var div = $('#priceServicesMessage');
+        var url = $('#prefillPriceServices').data('href');
+        $.get(url, function(data){
+            if(data){
+                div.html(data.message);
+                if(data.success) {
+                    $('#priceServices').val(data.price);
+                }
+            }
+        });
+    });
+
+    $('#prefillPrice').on('click', function(e) {
+        var entityId = $('#entityId').val();
+        var tp = $('#trainingProviderProfile').val();
+        var em = $('#examMethod').val();
+        var es = $('#examSet').val();
+        var examDurationExtension = $('#examDurationExtension').val();
+        var resit = Number($('#resit').is(':checked'));
+        var otherResit = Number($('#otherResit').is(':checked'));
+        var personnel = Number($('#personnel').is(':checked'));
+        var student = Number($('#student').is(':checked'));
+        var asqfMember = Number($('#asqfMember').is(':checked'));
+        var examDurationExtensionProof = Number($('#examDurationExtensionProof').is(':checked'));
+        var timeExtension = examDurationExtension || examDurationExtensionProof ? 1 : 0;
+        var div = $('#priceMessage');
+        var url = $('#prefillPrice').data('href');
+        url += '/profile/' + tp + '/examMethod/' + em + '/examSet/' + es + '/resit/' + resit + '/otherResit/' + otherResit + '/personnel/' + personnel;
+        url += '/student/' + student + '/asqfMember/' + asqfMember + '/timeExtension/' + timeExtension;
+        $.get(url, function(data){
+            if(data){
+                div.html(data.message);
+                if(data.success) {
+                    $('#currency').val(data.currency);
+                    $('#price').val(data.price);
+                    $('#licencefee').val(data.licencefee);
+                }
+            }
+        });
+    });
+}
+
+/* Customizing Bootstrap Popover */
+$.fn.popover.defaults = $.extend({} , $.fn.tooltip.defaults, {
+    placement: 'left',
+    trigger: 'focus',
+    content: '',
+    template: '<div style="width: auto;" class="popover alert-danger has-error"><div class="arrow"></div><div class="popover-inner"><div class="popover-content"><p></p></div></div></div>'
+});
+
+/* Customizing SearchFilter */
+$.extend($.fn.dataTableExt.oStdClasses, {
+    "sWrapper": "dataTables_wrapper form-inline dt-bootstrap",
+    "sFilterInput": "form-control input-sm",
+    "sLengthSelect": "form-control input-sm"
+});
+
+$.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
+{
+    return {
+        "iStart":         oSettings._iDisplayStart,
+        "iEnd":           oSettings.fnDisplayEnd(),
+        "iLength":        oSettings._iDisplayLength,
+        "iTotal":         oSettings.fnRecordsTotal(),
+        "iFilteredTotal": oSettings.fnRecordsDisplay(),
+        "iPage":          Math.ceil( oSettings._iDisplayStart / oSettings._iDisplayLength ),
+        "iTotalPages":    Math.ceil( oSettings.fnRecordsDisplay() / oSettings._iDisplayLength )
+    };
+}

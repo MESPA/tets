@@ -1,0 +1,114 @@
+@media print {
+
+* {
+    text-shadow: none !important;
+    color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a,
+a:visited {
+    text-decoration: underline;
+}
+
+a[href]:after {
+    content: " (" attr(href) ")";
+}
+
+abbr[title]:after {
+    content: " (" attr(title) ")";
+}
+
+.ir a:after,
+a[href^="javascript:"]:after,
+a[href^="#"]:after {
+    content: "";
+}
+
+pre,
+blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tr,
+img {
+    page-break-inside: avoid;
+}
+
+img {
+    max-width: 100% !important;
+}
+
+@page {
+    margin: 0.5cm;
+}
+
+p,
+h2,
+h3 {
+    orphans: 3;
+    widows: 3;
+}
+
+h2,
+h3 {
+    page-break-after: avoid;
+}
+
+.notprintable {
+    display: none;
+}
+
+hr {
+    border-radius: 0 !important;
+    border-right: 1px solid black !important;
+}
+
+tr {
+    border-radius: 0 !important;
+    border-right: 1px solid black !important;
+}
+
+td, th {
+    border-left: 1px solid black !important;
+    border-top: 1px solid black !important;
+    border-bottom: 1px solid black !important;
+}
+
+table {
+    border-collapse: collapse;
+    empty-cells:hide;
+}
+
+th, td {
+    padding: 5px;
+}
+
+.line-through {
+    text-decoration: line-through;
+}
+
+.text-left {
+    text-align: left;
+}
+
+table.consenttable {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.consenttable td {
+    width: 33%;
+}
+.consenttable tr {
+    height: 120px;
+}
+
+}
