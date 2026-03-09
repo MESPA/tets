@@ -1,113 +1,321 @@
 <!DOCTYPE html>
-<!-- saved from url=(0095)https://zertdb.isqi.org/certification/verification/t/%24%21nC%241%24esD8MDh1F3%2103/language/en -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
-
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<link rel="apple-touch-icon" sizes="57x57" href="https://zertdb.isqi.org/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="https://zertdb.isqi.org/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="https://zertdb.isqi.org/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="https://zertdb.isqi.org/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="https://zertdb.isqi.org/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="https://zertdb.isqi.org/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="https://zertdb.isqi.org/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="https://zertdb.isqi.org/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://zertdb.isqi.org/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="https://zertdb.isqi.org/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://zertdb.isqi.org/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="https://zertdb.isqi.org/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://zertdb.isqi.org/favicon-16x16.png">
-<link rel="manifest" href="https://zertdb.isqi.org/manifest.json">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-<meta name="theme-color" content="#ffffff">
-<link href="https://zertdb.isqi.org/favicon.ico" rel="shortcut icon" type="image/x-icon">
-<link href="bootstrap.css" media="screen" rel="stylesheet" type="text/css">
-<link href="bootstrap.css" media="screen" rel="stylesheet" type="text/css">
-<link href="dataTables.bootstrap.css" media="screen" rel="stylesheet" type="text/css">
-<link href="bootstrap-datetimepicker.css" media="screen" rel="stylesheet" type="text/css">
-<link href="custom.css" media="screen" rel="stylesheet" type="text/css">
-<link href="print.css" media="print" rel="stylesheet" type="text/css">
-<link href="public.css" media="screen" rel="stylesheet" type="text/css">
-
-<script type="text/javascript" src="jquery.js.download"></script>
-<script type="text/javascript" src="moment.js.download"></script>
-<script type="text/javascript" src="de.js.download"></script>
-<script type="text/javascript" src="en-gb.js.download"></script>
-<script type="text/javascript" src="jquery.maskedinput.js.download"></script>
-<script type="text/javascript" src="bootstrap.js.download"></script>
-<script type="text/javascript" src="jquery.dataTables.js.download"></script>
-<script type="text/javascript" src="dataTables.bootstrap.js.download"></script>
-<script type="text/javascript" src="bootstrap-datetimepicker.js.download"></script>
-<script type="text/javascript" src="codemirror.js.download"></script>
-<script type="text/javascript" src="xml.js.download"></script>
-<script type="text/javascript" src="simplemde.min.js.download"></script>
-<script type="text/javascript" src="custom.js.download"></script>
-
-<script type="text/javascript">
-//<!--
-var ZertDB = { locale: 'en-gb' };
-//-->
-
-</script>
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB® Certification Validation</title>
+    <link rel="icon" href="https://zertdb.isqi.org/favicon.ico" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        header {
+            background-color: #003366;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 60px;
+            width: auto;
+        }
+        
+        .lang-selector {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .lang-selector a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: block;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .lang-selector a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        
+        .lang-selector img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            width: 100%;
+        }
+        
+        .certificate-info {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .certificate-info h1 {
+            font-size: 28px;
+            color: #003366;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .certificate-info .date,
+        .certificate-info .cert-number {
+            font-size: 16px;
+            color: #555;
+            margin: 8px 0;
+        }
+        
+        .description {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .description a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        .description a:hover {
+            text-decoration: underline;
+        }
+        
+        .share-box {
+            background-color: #f5f8fa;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #003366;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .share-box::before {
+            content: "✓";
+            background-color: #003366;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .share-box p {
+            margin: 0;
+            color: #555;
+            font-size: 15px;
+        }
+        
+        .share-box a {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .share-box a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003366;
+            color: white;
+            padding: 30px 0;
+            margin-top: auto;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .footer-logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .footer-info {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+        
+        .footer-info a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        
+        .footer-info a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .footer-social a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .footer-social img {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container,
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .certificate-info h1 {
+                font-size: 22px;
+            }
+            
+            .share-box {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="container">
+    <!-- Header -->
     <header>
-        <div class="logo"><a href="https://zertdb.isqi.org/certification/index/t/%24%21nC%241%24esD8MDh1F3%2103/language/en" title="iSQI"><img class="img-responsive inner" src="isqi-logo.png" alt="Logo iSQI"></a></div>
-        <div class="lang">
-            <ul>
-                <li><a href="" title="DE"><img class="inner" src="de.svg" alt="DE"></a></li>
-                <li><a href="" title="EN"><img class="inner" src="en.svg" alt="EN"></a></li>
-            </ul>
+        <div class="header-container">
+            <div class="logo">
+                <a href="https://www.isqi.org/" title="iSQI">
+                    <img src="https://www.isqi.org/wp-content/uploads/2024/01/iSQI_Logo_Website-1.svg" alt="iSQI Logo">
+                </a>
+            </div>
+            <div class="lang-selector">
+                <a href="#" title="Deutsch">
+                    <img src="https://flagcdn.com/w80/de.png" alt="DE">
+                </a>
+                <a href="#" title="English">
+                    <img src="https://flagcdn.com/w80/gb.png" alt="EN">
+                </a>
+            </div>
         </div>
     </header>
-    <article class="main">
-                <p>
-            ISTQB® Certified Tester Foundation Level 4.0<br>
-            passed on 08/03/2026 <br>
-            Certificate No. 26-CTFL 4-274427-89
-        </p>
-                <p>
-            iSQI’s portfolio of professional certification can help you get ahead in your current role and also support your career progression. For more information
-            on how iSQI can support you please go to our website <a href="https://www.isqi.org/en/" target="_blank">www.isqi.org</a>.
-        </p>
-        <div class="box-share">
-            <p>If you would like to share your success and update your LinkedIn profile please visit:  <a href="https://lnkd.in/eRwvvCz" title="LinkedIn Profile" target="_blank">https://lnkd.in/eRwvvCz</a>.</p>
-        </div>
-    </article>
-</div>
 
-</div>
-<footer>
-    <div class="container">
-        <div class="inner">
-            <div class="footer-logo">
-                <ul>
-                    <li><a href="https://www.isqi.org/" title="Certifying People"><img class="inner" src="certifying-people-logo-white.png" alt="Certifying People Logo"></a></li>
-                    <li>Copyright © 2026 iSQI GmbH, All rights reserved | <a href="https://zertdb.isqi.org/en/imprint">Imprint</a></li>
-                </ul>
+    <!-- Main Content -->
+    <main>
+        <div class="certificate-info">
+            <h1>ISTQB® Certified Tester Foundation Level 4.0</h1>
+            <p class="date">passed on 08/03/2026</p>
+            <p class="cert-number">Certificate No. 26-CTFL 4-274427-81</p>
+        </div>
+
+        <div class="description">
+            <p>
+                iSQI's portfolio of professional certification can help you get ahead in your current role and also support your career progression. 
+                For more information on how iSQI can support you please go to our website 
+                <a href="https://www.isqi.org" target="_blank">www.isqi.org</a>.
+            </p>
+        </div>
+
+        <div class="share-box">
+            <p>
+                If you would like to share your success and update your LinkedIn profile please visit: 
+                <a href="https://lnkd.in/eRwvvCz" target="_blank">https://lnkd.in/eRwvvCz</a>.
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="footer-logo">
+                    <img src="https://www.isqi.org/wp-content/uploads/2024/01/iSQI_Logo_Website-1.svg" alt="iSQI Logo" style="filter: brightness(0) invert(1);">
+                </div>
+            </div>
+            <div class="footer-info">
+                Copyright © 2026 iSQI GmbH, All rights reserved | 
+                <a href="https://www.isqi.org/en/imprint/">Imprint</a>
             </div>
             <div class="footer-social">
-                <ul>
-                    <li><a href="https://www.facebook.com/iSQIgroup" target="_blank" title="Facebook"><img class="inner" src="footer-facebook.svg" alt="Facebook"></a></li>
-                    <li><a href="https://twitter.com/iSQICert" target="_blank" title="Twitter"><img class="inner" src="footer-twitter.svg" alt="Twitter"></a></li>
-                    <li><a href="https://de.linkedin.com/company/isqi-gmbh" target="_blank" title="LinkIden"><img class="inner" src="footer-linkedin.svg" alt="LinkedIn"></a></li>
-                    <li><a href="https://www.youtube.com/user/isqigmbh" target="_blank" title="Youtube"><img class="inner" src="footer-youtube.svg" alt="Youtube"></a></li>
-                </ul>
+                <a href="https://www.facebook.com/iSQIgroup" target="_blank" title="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/iSQICert" target="_blank" title="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    </svg>
+                </a>
+                <a href="https://de.linkedin.com/company/isqi-gmbh" target="_blank" title="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="https://www.youtube.com/user/isqigmbh" target="_blank" title="YouTube">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                </a>
             </div>
         </div>
-    </div>
-</footer>
-
-
-</body></html>
+    </footer>
+</body>
+</html>
