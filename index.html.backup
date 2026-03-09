@@ -72,11 +72,11 @@ var ZertDB = { locale: 'en-gb' };
         </div>
     </header>
     <article class="main">
-                <p> 
+                <p> <center>
 ISTQB® Certified Tester Foundation Level 4.0<br>
             passed on 08/03/2026 <br>
             Certificate No. 26-CTFL 4-274427-89
-               
+                </center>
             
         </p>
                 <p>
